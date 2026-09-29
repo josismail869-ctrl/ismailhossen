@@ -1,278 +1,254 @@
-export type AgentKind = "coding" | "research" | "review" | "writing";
-export type SessionStatus = "running" | "completed" | "queued" | "failed";
+export type Game = {
+  key: string;
+  name: string;
+  country: "Malaysia" | "Singapore";
+  drawDays: string;
+  accent: "gold" | "red";
+};
 
-export type AgentSession = {
-  id: string;
+export const games: Game[] = [
+  { key: "sports-toto", name: "Sports Toto", country: "Malaysia", drawDays: "Wed · Sat · Sun", accent: "red" },
+  { key: "magnum", name: "Magnum 4D", country: "Malaysia", drawDays: "Wed · Sat · Sun", accent: "gold" },
+  { key: "damacai", name: "Da Ma Cai", country: "Malaysia", drawDays: "Wed · Sat · Sun", accent: "red" },
+  { key: "singapore-pools", name: "Singapore Pools", country: "Singapore", drawDays: "Wed · Sat · Sun", accent: "gold" },
+  { key: "stc", name: "STC 4D", country: "Malaysia", drawDays: "Wed · Sat · Sun", accent: "gold" },
+  { key: "88-group", name: "88 Group", country: "Malaysia", drawDays: "Daily specials", accent: "red" },
+];
+
+export type DrawResult = {
+  gameKey: string;
+  drawDate: string;
+  first: string;
+  second: string;
+  third: string;
+  special: string[];
+  consolation: string[];
+};
+
+export const latestResults: DrawResult[] = [
+  {
+    gameKey: "sports-toto",
+    drawDate: "2026-09-27",
+    first: "5410",
+    second: "2450",
+    third: "8154",
+    special: ["0932", "7718", "3356", "6204", "1587", "9041", "4470", "2863", "5519", "7305"],
+    consolation: ["1188", "4026", "9653", "2371", "6840", "0517", "8294", "3762", "5908", "7145"],
+  },
+  {
+    gameKey: "magnum",
+    drawDate: "2026-09-27",
+    first: "7723",
+    second: "1089",
+    third: "4561",
+    special: ["2210", "8834", "0976", "5542", "7198", "3405", "9667", "4123", "6850", "2574"],
+    consolation: ["0391", "5817", "7246", "1960", "8632", "4508", "3075", "9421", "6754", "2189"],
+  },
+  {
+    gameKey: "damacai",
+    drawDate: "2026-09-27",
+    first: "3098",
+    second: "6617",
+    third: "9245",
+    special: ["1874", "5520", "7963", "0411", "4387", "8702", "2156", "6690", "3849", "9075"],
+    consolation: ["7261", "1534", "4908", "8857", "0623", "5196", "3470", "9912", "2348", "6085"],
+  },
+  {
+    gameKey: "singapore-pools",
+    drawDate: "2026-09-27",
+    first: "8862",
+    second: "1734",
+    third: "5509",
+    special: ["3147", "7095", "9621", "4268", "1850", "6573", "0416", "8934", "2709", "5382"],
+    consolation: ["4607", "9251", "0873", "6128", "3540", "7916", "1485", "5062", "8397", "2641"],
+  },
+  {
+    gameKey: "stc",
+    drawDate: "2026-09-26",
+    first: "1274",
+    second: "8950",
+    third: "4637",
+    special: ["7012", "3568", "9841", "2406", "6175", "8529", "0953", "4780", "3217", "7694"],
+    consolation: ["5830", "2146", "9407", "3971", "6658", "1204", "8563", "4092", "7315", "2879"],
+  },
+  {
+    gameKey: "88-group",
+    drawDate: "2026-09-26",
+    first: "6503",
+    second: "3827",
+    third: "7194",
+    special: ["0468", "5912", "8370", "2645", "4081", "9736", "1259", "6804", "3527", "7941"],
+    consolation: ["2190", "8654", "4317", "0862", "7528", "3095", "6471", "1843", "9206", "5759"],
+  },
+];
+
+export type Prediction = {
+  gameKey: string;
+  gameName: string;
+  forDate: string;
+  numbers: string[];
+  note: string;
+};
+
+export const freePredictions: Prediction[] = [
+  {
+    gameKey: "grand-dragon-9lotto",
+    gameName: "Grand Dragon & 9 Lotto",
+    forDate: "2026-09-30",
+    numbers: ["5410", "2450", "8154"],
+    note: "Informational only — predictions are never a guarantee.",
+  },
+  {
+    gameKey: "sports-toto",
+    gameName: "Sports Toto",
+    forDate: "2026-09-30",
+    numbers: ["7723", "1089", "4561"],
+    note: "Informational only — predictions are never a guarantee.",
+  },
+  {
+    gameKey: "singapore-pools",
+    gameName: "Singapore Pools",
+    forDate: "2026-10-01",
+    numbers: ["3098", "6617", "9245"],
+    note: "Informational only — predictions are never a guarantee.",
+  },
+];
+
+export const vipPredictionPreview = {
+  forDate: "2026-09-30",
+  gamesCovered: 6,
+  setsProvided: 12,
+  perks: [
+    "12 VIP number sets across all six games",
+    "1st prize calculation breakdown",
+    "Early access before public posts",
+    "Direct helpline support",
+  ],
+};
+
+export type DailyPost = {
+  id: number;
+  gameKey: string;
+  gameName: string;
+  postDate: string;
   title: string;
-  agent: AgentKind;
-  status: SessionStatus;
-  model: string;
-  startedAt: string;
-  durationMin: number;
-  tokens: number;
-  summary: string;
+  content: string;
+  numbers: string[];
+  visibility: "free" | "vip";
 };
 
-export type KnowledgeKind = "note" | "snippet" | "reference" | "collection";
+export const dailyPosts: DailyPost[] = [
+  {
+    id: 1,
+    gameKey: "grand-dragon-9lotto",
+    gameName: "Grand Dragon & 9 Lotto",
+    postDate: "2026-09-29",
+    title: "Tomorrow Prediction — Grand Dragon & 9 Lotto",
+    content:
+      "Our free pick set for the upcoming draw. These numbers are shared for informational purposes only and carry no guarantee of any outcome.",
+    numbers: ["5410", "2450", "8154"],
+    visibility: "free",
+  },
+  {
+    id: 2,
+    gameKey: "magnum",
+    gameName: "Magnum 4D",
+    postDate: "2026-09-29",
+    title: "Magnum mid-week watch list",
+    content:
+      "A free watch list built from recent draw frequency. Always treat predictions as entertainment, not certainty.",
+    numbers: ["7723", "1089"],
+    visibility: "free",
+  },
+  {
+    id: 3,
+    gameKey: "singapore-pools",
+    gameName: "Singapore Pools",
+    postDate: "2026-09-28",
+    title: "Singapore Pools weekend briefing",
+    content:
+      "VIP members received the full 12-set briefing. This public summary shares two highlighted sets from the analysis.",
+    numbers: ["8862", "1734"],
+    visibility: "free",
+  },
+  {
+    id: 4,
+    gameKey: "sports-toto",
+    gameName: "Sports Toto",
+    postDate: "2026-09-28",
+    title: "VIP full board — Sports Toto",
+    content:
+      "The complete VIP board with 1st prize calculation notes is available to active VIP members.",
+    numbers: [],
+    visibility: "vip",
+  },
+];
 
-export type KnowledgeEntry = {
+export type Plan = {
   id: string;
-  title: string;
-  kind: KnowledgeKind;
-  excerpt: string;
-  tags: string[];
-  updatedAt: string;
+  name: string;
+  priceMyr: number;
+  period: string;
+  tagline: string;
+  features: string[];
+  highlighted: boolean;
 };
 
-export type ActivityEvent = {
-  id: string;
-  actor: string;
-  action: string;
-  target: string;
-  at: string;
-};
-
-export type UsagePoint = {
-  day: string;
-  sessions: number;
-  tokens: number;
-};
-
-export const sessions: AgentSession[] = [
+export const plans: Plan[] = [
   {
-    id: "ses_9f2ka1",
-    title: "Refactor billing webhook handlers",
-    agent: "coding",
-    status: "running",
-    model: "kimi-k2",
-    startedAt: "2026-09-30T08:41:00Z",
-    durationMin: 12,
-    tokens: 18420,
-    summary: "Splitting the monolithic webhook router into per-provider handlers with shared retry logic.",
+    id: "free",
+    name: "Free",
+    priceMyr: 0,
+    period: "forever",
+    tagline: "Daily results and public picks",
+    features: [
+      "All latest draw results",
+      "Free daily predictions",
+      "Public daily posts",
+      "Community helpline",
+    ],
+    highlighted: false,
   },
   {
-    id: "ses_8e1jb4",
-    title: "Research: vector indexes on MySQL 8.4",
-    agent: "research",
-    status: "completed",
-    model: "kimi-k2",
-    startedAt: "2026-09-30T06:15:00Z",
-    durationMin: 34,
-    tokens: 42110,
-    summary: "Compared VECTOR index support, distance functions, and migration paths from pgvector.",
+    id: "silver",
+    name: "Silver",
+    priceMyr: 30,
+    period: "per month",
+    tagline: "Extra sets every draw day",
+    features: [
+      "Everything in Free",
+      "6 extra prediction sets",
+      "Draw-day reminders",
+      "Priority helpline",
+    ],
+    highlighted: false,
   },
   {
-    id: "ses_7d0hc9",
-    title: "Review PR #182: session cache",
-    agent: "review",
-    status: "completed",
-    model: "kimi-k2",
-    startedAt: "2026-09-29T21:02:00Z",
-    durationMin: 9,
-    tokens: 9640,
-    summary: "Approved with two nits: stale-while-revalidate window and a missing eviction test.",
+    id: "gold",
+    name: "Gold",
+    priceMyr: 60,
+    period: "per month",
+    tagline: "Serious coverage for regulars",
+    features: [
+      "Everything in Silver",
+      "VIP daily posts access",
+      "1st prize calculation notes",
+      "Early post access",
+    ],
+    highlighted: true,
   },
   {
-    id: "ses_6c9gd2",
-    title: "Draft launch announcement",
-    agent: "writing",
-    status: "completed",
-    model: "kimi-k2",
-    startedAt: "2026-09-29T17:44:00Z",
-    durationMin: 14,
-    tokens: 15230,
-    summary: "Three variants drafted; the calm, technical tone scored best against brand voice.",
-  },
-  {
-    id: "ses_5b8fc7",
-    title: "Migrate settings page to new form kit",
-    agent: "coding",
-    status: "completed",
-    model: "kimi-k2",
-    startedAt: "2026-09-29T14:20:00Z",
-    durationMin: 47,
-    tokens: 68940,
-    summary: "Moved 6 forms to the shared kit, deleted 400 lines of duplicated validation.",
-  },
-  {
-    id: "ses_4a7eb3",
-    title: "Research: pricing page benchmarks",
-    agent: "research",
-    status: "queued",
-    model: "kimi-k2",
-    startedAt: "2026-09-30T09:05:00Z",
-    durationMin: 0,
-    tokens: 0,
-    summary: "Queued behind the running billing refactor.",
-  },
-  {
-    id: "ses_3z6da8",
-    title: "Fix flaky checkout test",
-    agent: "coding",
-    status: "failed",
-    model: "kimi-k2",
-    startedAt: "2026-09-29T11:37:00Z",
-    durationMin: 21,
-    tokens: 27480,
-    summary: "Could not reproduce the flake locally; needs a seeded CI replay to continue.",
-  },
-  {
-    id: "ses_2y5cz5",
-    title: "Summarize customer interviews",
-    agent: "research",
-    status: "completed",
-    model: "kimi-k2",
-    startedAt: "2026-09-28T19:12:00Z",
-    durationMin: 18,
-    tokens: 31050,
-    summary: "Twelve interviews distilled into four themes: speed, trust, price, and mobile.",
+    id: "vip",
+    name: "VIP",
+    priceMyr: 120,
+    period: "per month",
+    tagline: "The full board, every draw",
+    features: [
+      "Everything in Gold",
+      "12 VIP sets across all games",
+      "Direct 1-on-1 helpline",
+      "Custom request reviews",
+    ],
+    highlighted: false,
   },
 ];
-
-export const knowledgeEntries: KnowledgeEntry[] = [
-  {
-    id: "kn_01",
-    title: "Agent prompting checklist",
-    kind: "note",
-    excerpt: "Scope the task, name the files, state the done condition, and always give the agent a way to verify its own work.",
-    tags: ["agents", "workflow"],
-    updatedAt: "2026-09-29T15:30:00Z",
-  },
-  {
-    id: "kn_02",
-    title: "tRPC v11 link setup",
-    kind: "snippet",
-    excerpt: "httpBatchLink with a single /api/trpc endpoint; keep transformers off unless Date or Map crosses the wire.",
-    tags: ["trpc", "typescript"],
-    updatedAt: "2026-09-28T10:05:00Z",
-  },
-  {
-    id: "kn_03",
-    title: "Competitor pricing notes",
-    kind: "reference",
-    excerpt: "Seat-based pricing wins for teams; usage-based pricing confuses solo buyers. Hybrid with a generous floor reads best.",
-    tags: ["pricing", "research"],
-    updatedAt: "2026-09-27T18:42:00Z",
-  },
-  {
-    id: "kn_04",
-    title: "Launch plan — September",
-    kind: "collection",
-    excerpt: "Announcement draft, changelog entry, status page update, and the member email sequence in one place.",
-    tags: ["launch", "planning"],
-    updatedAt: "2026-09-26T09:14:00Z",
-  },
-  {
-    id: "kn_05",
-    title: "MySQL 8.4 upgrade notes",
-    kind: "reference",
-    excerpt: "Watch for removed query cache settings and the new default authentication plugin before flipping production.",
-    tags: ["mysql", "infra"],
-    updatedAt: "2026-09-25T13:58:00Z",
-  },
-  {
-    id: "kn_06",
-    title: "Diff review rubric",
-    kind: "note",
-    excerpt: "Correctness first, then readability, then size. Any diff over 400 lines gets split before human review.",
-    tags: ["review", "quality"],
-    updatedAt: "2026-09-24T16:21:00Z",
-  },
-  {
-    id: "kn_07",
-    title: "Vite middleware mode recipe",
-    kind: "snippet",
-    excerpt: "createViteServer with middlewareMode and appType custom, then transformIndexHtml on the catch-all route.",
-    tags: ["vite", "express"],
-    updatedAt: "2026-09-23T11:47:00Z",
-  },
-  {
-    id: "kn_08",
-    title: "Onboarding email drafts",
-    kind: "collection",
-    excerpt: "Day 0 welcome, day 2 first session nudge, day 5 knowledge base tour. Tone: calm, short, no exclamation marks.",
-    tags: ["email", "growth"],
-    updatedAt: "2026-09-22T08:33:00Z",
-  },
-];
-
-export const activity: ActivityEvent[] = [
-  {
-    id: "ev_06",
-    actor: "coding agent",
-    action: "started",
-    target: "Refactor billing webhook handlers",
-    at: "2026-09-30T08:41:00Z",
-  },
-  {
-    id: "ev_05",
-    actor: "research agent",
-    action: "completed",
-    target: "Vector indexes on MySQL 8.4",
-    at: "2026-09-30T06:49:00Z",
-  },
-  {
-    id: "ev_04",
-    actor: "you",
-    action: "saved",
-    target: "Agent prompting checklist",
-    at: "2026-09-29T15:30:00Z",
-  },
-  {
-    id: "ev_03",
-    actor: "review agent",
-    action: "approved",
-    target: "PR #182: session cache",
-    at: "2026-09-29T21:11:00Z",
-  },
-  {
-    id: "ev_02",
-    actor: "writing agent",
-    action: "drafted",
-    target: "Launch announcement",
-    at: "2026-09-29T17:58:00Z",
-  },
-  {
-    id: "ev_01",
-    actor: "coding agent",
-    action: "completed",
-    target: "Settings page form kit migration",
-    at: "2026-09-29T15:07:00Z",
-  },
-];
-
-export const usageSeries: UsagePoint[] = [
-  { day: "Sep 17", sessions: 6, tokens: 98000 },
-  { day: "Sep 18", sessions: 9, tokens: 142000 },
-  { day: "Sep 19", sessions: 4, tokens: 61000 },
-  { day: "Sep 20", sessions: 3, tokens: 44000 },
-  { day: "Sep 21", sessions: 8, tokens: 131000 },
-  { day: "Sep 22", sessions: 11, tokens: 176000 },
-  { day: "Sep 23", sessions: 7, tokens: 118000 },
-  { day: "Sep 24", sessions: 10, tokens: 164000 },
-  { day: "Sep 25", sessions: 12, tokens: 201000 },
-  { day: "Sep 26", sessions: 5, tokens: 83000 },
-  { day: "Sep 27", sessions: 4, tokens: 69000 },
-  { day: "Sep 28", sessions: 9, tokens: 149000 },
-  { day: "Sep 29", sessions: 13, tokens: 224000 },
-  { day: "Sep 30", sessions: 8, tokens: 132000 },
-];
-
-export const workspaceStats = {
-  sessionsThisMonth: { value: 128, delta: "+18%" },
-  tasksCompleted: { value: 342, delta: "+9%" },
-  tokensUsed: { value: 1840000, delta: "+22%" },
-  knowledgeCount: { value: 96, delta: "+4%" },
-};
-
-export const currentMembership = {
-  tierId: "maker",
-  tierName: "Maker",
-  memberName: "Demo Member",
-  renewsAt: "2026-11-01T00:00:00Z",
-  usage: {
-    sessions: { used: 128, limit: null as number | null },
-    tokens: { used: 1840000, limit: 2500000 },
-    knowledge: { used: 96, limit: 500 },
-  },
-};

@@ -1,55 +1,49 @@
 import { z } from "zod";
-import { MEMBERSHIP_TIERS } from "../shared/const";
+import { PAYMENT_BENEFICIARY, PAYMENT_METHODS } from "../shared/siteConfig";
 import { publicProcedure, router } from "./_core/trpc";
 import {
-  activity,
-  currentMembership,
-  knowledgeEntries,
-  sessions,
-  usageSeries,
-  workspaceStats,
+  dailyPosts,
+  freePredictions,
+  games,
+  latestResults,
+  plans,
+  vipPredictionPreview,
 } from "./data";
 
 export const appRouter = router({
-  membership: router({
-    tiers: publicProcedure.query(() => MEMBERSHIP_TIERS),
-    current: publicProcedure.query(() => currentMembership),
+  results: router({
+    latest: publicProcedure.query(() =>
+      games.map((game) => ({
+        game,
+        result: latestResults.find((r) => r.gameKey === game.key) ?? null,
+      }))
+    ),
   }),
-  workspace: router({
-    overview: publicProcedure.query(() => ({
-      stats: workspaceStats,
-      usageSeries,
-      recentSessions: sessions.slice(0, 5),
-      activity,
-    })),
-    sessions: publicProcedure
+  predictions: router({
+    free: publicProcedure.query(() => freePredictions),
+    vipPreview: publicProcedure.query(() => vipPredictionPreview),
+  }),
+  posts: router({
+    published: publicProcedure
       .input(
         z
-          .object({
-            status: z
-              .enum(["all", "running", "completed", "queued", "failed"])
-              .default("all"),
-          })
+          .object({ game: z.string().trim().optional() })
           .optional()
       )
       .query(({ input }) => {
-        const status = input?.status ?? "all";
-        return status === "all"
-          ? sessions
-          : sessions.filter((session) => session.status === status);
+        const published = dailyPosts.filter((p) => p.visibility === "free");
+        if (!input?.game || input.game === "all") return published;
+        return published.filter((p) => p.gameKey === input.game);
       }),
-    knowledge: publicProcedure
-      .input(z.object({ search: z.string().trim().optional() }).optional())
-      .query(({ input }) => {
-        const query = input?.search?.toLowerCase();
-        if (!query) return knowledgeEntries;
-        return knowledgeEntries.filter((entry) =>
-          [entry.title, entry.excerpt, entry.kind, ...entry.tags]
-            .join(" ")
-            .toLowerCase()
-            .includes(query)
-        );
-      }),
+  }),
+  plans: router({
+    list: publicProcedure.query(() => plans),
+  }),
+  payments: router({
+    methods: publicProcedure.query(() => ({
+      beneficiary: PAYMENT_BENEFICIARY,
+      methods: PAYMENT_METHODS,
+    })),
   }),
 });
 

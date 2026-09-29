@@ -6,10 +6,7 @@ import { Route, Switch } from "wouter";
 import { trpc } from "./lib/trpc";
 import Home from "./pages/home";
 import NotFound from "./pages/not-found";
-import WorkspaceKnowledge from "./pages/workspace/knowledge";
-import WorkspaceMembership from "./pages/workspace/membership";
-import WorkspaceOverview from "./pages/workspace/overview";
-import WorkspaceSessions from "./pages/workspace/sessions";
+import Vip from "./pages/vip";
 
 export default function App() {
   const [queryClient] = useState(() => new QueryClient());
@@ -24,10 +21,7 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <Switch>
           <Route path="/" component={Home} />
-          <Route path="/workspace" component={WorkspaceOverview} />
-          <Route path="/workspace/sessions" component={WorkspaceSessions} />
-          <Route path="/workspace/knowledge" component={WorkspaceKnowledge} />
-          <Route path="/workspace/membership" component={WorkspaceMembership} />
+          <Route path="/vip" component={Vip} />
           <Route component={NotFound} />
         </Switch>
         <Toaster theme="dark" position="bottom-right" />

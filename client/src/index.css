@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -7,23 +7,28 @@
   --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --color-ink-950: #09090d;
-  --color-ink-900: #0e0e14;
-  --color-ink-850: #12121a;
-  --color-ink-800: #17171f;
-  --color-ink-700: #1f1f2a;
-  --color-ink-600: #2b2b38;
+  --color-night-950: #07070a;
+  --color-night-900: #0c0c11;
+  --color-night-850: #111118;
+  --color-night-800: #17171f;
+  --color-night-700: #20202a;
+  --color-night-600: #2c2c38;
 
-  --color-cream-50: #f4f2ec;
-  --color-cream-200: #cfcdc4;
-  --color-cream-400: #a3a1a0;
-  --color-cream-500: #8b8a94;
+  --color-cream-50: #f5f2e9;
+  --color-cream-200: #d4d0c2;
+  --color-cream-400: #a3a099;
+  --color-cream-500: #8b887f;
 
-  --color-accent-200: #cdc8ff;
-  --color-accent-300: #b3adff;
-  --color-accent-400: #9d94ff;
-  --color-accent-500: #8b7ff5;
-  --color-accent-600: #7466e8;
+  --color-gold-200: #f7e2a8;
+  --color-gold-300: #f0cf7d;
+  --color-gold-400: #e5b94f;
+  --color-gold-500: #d4a017;
+  --color-gold-600: #a87d10;
+
+  --color-ruby-300: #f07575;
+  --color-ruby-400: #e5484d;
+  --color-ruby-500: #d32f2f;
+  --color-ruby-600: #b71c1c;
 }
 
 html {
@@ -31,7 +36,7 @@ html {
 }
 
 body {
-  background-color: var(--color-ink-950);
+  background-color: var(--color-night-950);
   color: var(--color-cream-50);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -39,12 +44,23 @@ body {
 }
 
 ::selection {
-  background: rgb(139 127 245 / 0.35);
+  background: rgb(212 160 23 / 0.35);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-ink-600) transparent;
+  scrollbar-color: var(--color-night-600) transparent;
+}
+
+.gold-text {
+  background: linear-gradient(115deg, #f7e2a8 0%, #e5b94f 45%, #d4a017 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gold-ring {
+  box-shadow: 0 0 0 1px rgb(212 160 23 / 0.35), 0 12px 40px -12px rgb(212 160 23 / 0.25);
 }
 
 @keyframes accordion-down {
